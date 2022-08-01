@@ -66,6 +66,7 @@ char *_getenv(char *env)
 		}
 		free(aux);
 	}
+	return (NULL);
 }
 char *_which(char *cmd)
 {
@@ -101,9 +102,12 @@ char *_which(char *cmd)
 int _execve(char *path)
 {
 	int status = 0;
+	char **argv;
 	if (fork() == 0)
 	{
-		char *argv[] = {path, NULL};
+		argv = malloc(sizeof(char**) * 2);
+		argv[0] = path;
+		argv[1] = NULL;
 		execve(path, argv, NULL);
 	}
 	else
