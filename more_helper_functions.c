@@ -77,7 +77,7 @@ char *_which(char *cmd)
 	path = strtok(paths, ":");
 
 	if (stat(cmd, &st) == 0)
-		return (cmd);
+		return (_strdup(cmd));
 	while (path)
 	{
 		cmd_path = malloc(sizeof(char) * _strlen(path) + _strlen(cmd) + 2);
@@ -95,9 +95,8 @@ char *_which(char *cmd)
                 path = strtok(NULL, ":");
                 free(cmd_path);
         }
-	free(path);
 	free(paths);
-	return ("PEPE");
+	return (NULL);
 }
 int _execve(char *path)
 {
