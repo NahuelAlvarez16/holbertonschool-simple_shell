@@ -17,6 +17,8 @@ int main(int argc,char **argv)
 	{
 		if (getline(&buffer, &len, stdin) == -1)
 		{
+			if (buffer)
+				free(buffer);
 			return (0);
 		}
 		strtok(buffer, "\n");
