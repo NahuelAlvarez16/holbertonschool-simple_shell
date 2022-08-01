@@ -23,7 +23,7 @@ int main(int argc,char **argv)
 			return (0);
 		}
 		cmd = _strdup(buffer);
-		cmd = strtok(cmd, "\n");
+		strtok(cmd, "\n");
 		cmd_path = _which(cmd);
 		if (cmd_path)
 		{

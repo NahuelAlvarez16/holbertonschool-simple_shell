@@ -77,7 +77,10 @@ char *_which(char *cmd)
 	path = strtok(paths, ":");
 
 	if (stat(cmd, &st) == 0)
+	{
+		free(path);
 		return (_strdup(cmd));
+	}
 	while (path)
 	{
 		cmd_path = malloc(sizeof(char) * _strlen(path) + _strlen(cmd) + 2);
