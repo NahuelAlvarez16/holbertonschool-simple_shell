@@ -17,7 +17,6 @@ int main(int argc,char **argv)
 	{
 		if (getline(&buffer, &len, stdin) == -1)
 		{
-			_putchar('\n');
 			free(buffer);
 			return (0);
 		}
