@@ -12,7 +12,6 @@ void _puts(char *str)
 		_putchar(*(str + i));
 		i++;
 	}
-	_putchar('\n');
 }
 /**
  * _strdup -pointer to a newly allocated space in memory
@@ -32,7 +31,7 @@ char *_strdup(char *str)
 		;
 
 	temp = malloc(size + 1);
-
+	
 	if (temp == NULL)
 		return (NULL);
 	while (i < size)
@@ -42,4 +41,72 @@ char *_strdup(char *str)
 	}
 	temp[i] = '\0';
 	return (temp);
+}
+/**
+ * _getenv - Get variable content of a variable environment variable
+ * @env: Name of environment variable
+ * Return: return the content of environment variable
+ */
+char *_getenv(char *env)
+{
+	extern char **environ;
+	char *aux;
+	char *content;
+	int i = 0;
+	
+	for (; environ[i]; i++)
+	{
+		aux = _strdup(environ[i]);
+		aux = strtok(aux, "=");
+		if (_strcmp(aux, env) == 0)
+		{
+			content = _strdup(strtok(NULL, "="));
+			free(aux);
+			return (content);
+		}
+		free(aux);
+	}
+}
+char *_which(char *cmd)
+{
+	char *paths;
+	char *path;
+	char *cmd_path;
+	paths = _getenv("PATH");
+	path = strtok(paths, ":");
+
+	if (stat(cmd, &st) == 0)
+		return (cmd);
+	while (path)
+	{
+		cmd_path = malloc(sizeof(char) * _strlen(path) + _strlen(cmd) + 2);
+		if (!cmd_path)
+			return (NULL);
+		cmd_path[0] = '\0';
+		_strcat(cmd_path, path);
+                _strcat(cmd_path, "/");
+		_strcat(cmd_path, cmd);
+		if(stat(cmd_path, &st) ==  0)
+                {
+			free(paths);	
+			return (cmd_path);
+		}
+                path = strtok(NULL, ":");
+                free(cmd_path);
+        }
+	free(path);
+	free(paths);
+	return ("PEPE");
+}
+int _execve(char *path)
+{
+	int status = 0;
+	if (fork() == 0)
+	{
+		char *argv[] = {path, NULL};
+		execve(path, argv, NULL);
+	}
+	else
+		wait(&status);
+	return (0);
 }

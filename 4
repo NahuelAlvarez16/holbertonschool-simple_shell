@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+int find_command(char *cmd, char *argv[])
+{
+	char *paths;
+	char *path;
+	char *cmd_path;
+	int file;
+	paths = getenv("PATH");
+	path = strdup(paths);
+	path = strtok(path, ":");
+
+	while (path)
+	{
+		cmd_path = malloc(sizeof(char) * strlen(path) + strlen(cmd) + 2);
+		strcat(cmd_path, path);
+		strcat(cmd_path, "/");
+		strcat(cmd_path, cmd);
+		file = open(cmd_path, O_RDONLY);
+		char *argv1[] = {cmd_path, NULL};
+		if(file == 3)
+		{
+			execve(cmd_path, argv1, NULL);
+		}
+		path = strtok(NULL, ":");
+		free(cmd_path);
+	}
+}
+int main(int argc,char **argv)
+{
+	char *buffer;
+	size_t len = 0;
+	if (argc > 1)
+	{
+		find_command(argv[1], NULL);
+	}
+	while (argc == 1)
+	{
+		printf("#cisfun$ ");
+		getline(&buffer, &len, stdin);
+		strtok(buffer, "\n");
+		find_command(buffer, NULL);
+	}
+	return (0);
+}
+

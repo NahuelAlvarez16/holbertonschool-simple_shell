@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+int main(void)
+{
+	char *paths;
+	char *path;
+	char *cmd = "betty";
+	char *cmd_path;
+	int file;
+	
+	paths = getenv("PATH");
+	path = strtok(paths, ":");
+	
+	while (path)
+	{
+		cmd_path = malloc(sizeof(char) * 1024);
+		strcat(cmd_path, path);
+		strcat(cmd_path, "/");
+		strcat(cmd_path, cmd);
+		file = open(cmd_path, O_RDONLY);
+		if(file == 3)
+		{
+			printf("TE ENCONTRE EN PATH: %s\n\n\n", cmd_path);
+			execve(cmd_path, NULL, NULL);
+		}
+		path = strtok(NULL, ":");
+		free(cmd_path);
+	}
+	return (0);
+}
+

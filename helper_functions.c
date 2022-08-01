@@ -39,6 +39,10 @@ int _strcmp(char *s1, char *s2)
 {
 	int i = 0;
 
+	if (!s1 && !s2)
+		return (0);
+	if (!s1 || !s2)
+		return (-1);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
@@ -48,17 +52,17 @@ int _strcmp(char *s1, char *s2)
 	return (0);
 }
 /**
- * _strlen - lenght of a string
+ * _strlen - length of a string
  * @s: string
- * Return: return lenght of a s variable
+ * Return: return length of a s variable
  */
 int _strlen(char *s)
 {
-	int lenght = 0;
+	int length = 0;
 
-	while (*(s + lenght))
-		lenght++;
-	return (lenght);
+	while (*(s + length))
+		length++;
+	return (length);
 }
 /**
  * _strcat - Concatenates two strings.
@@ -71,15 +75,15 @@ char *_strcat(char *dest, char *src)
 	int i = 0;
 	int length = 0;
 
-	while (*(dest + length))
+	while (dest[length])
 		length++;
 
-	while (*(src + i))
+	while (src[i])
 	{
-		*(dest + length) = *(src + i);
+		dest[length] = src[i];
 		length++;
 		i++;
 	}
-	*(dest + length) = '\0';
+	dest[length] = '\0';
 	return (dest);
 }
