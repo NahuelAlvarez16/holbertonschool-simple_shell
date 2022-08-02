@@ -16,5 +16,5 @@ int _strcmp(char *s1, char *s2);
 char *_getenv(char *env);
 char *_strdup(char *str);
 char *_which(char *cmd);
-int _execve(char *path);
+int _execve(char **args);
 #endif

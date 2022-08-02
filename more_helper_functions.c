@@ -101,16 +101,13 @@ char *_which(char *cmd)
 	free(paths);
 	return (NULL);
 }
-int _execve(char *path)
+int _execve(char **args)
 {
 	int status = 0;
-	char **argv;
+	
 	if (fork() == 0)
 	{
-		argv = malloc(sizeof(char**) * 2);
-		argv[0] = path;
-		argv[1] = NULL;
-		execve(path, argv, NULL);
+		execve(args[0], args, NULL);
 	}
 	else
 		wait(&status);
