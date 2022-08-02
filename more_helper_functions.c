@@ -104,9 +104,12 @@ char *_which(char *cmd)
 int _execve(char **args)
 {
 	int status = 0;
-	
+	char *path;
 	if (fork() == 0)
 	{
+		path = _which(args[0]);
+		free(args[0]);
+		args[0] = path;
 		execve(args[0], args, NULL);
 	}
 	else

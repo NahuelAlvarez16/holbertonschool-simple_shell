@@ -49,9 +49,7 @@ int main(int argc,char **argv)
 	int i;
 	if (argc > 1)
 	{
-		argv[1] = _which(argv[1]);
 		_execve(&argv[1]);
-		free(argv[1]);
 		return (0);
 	}
 	while (argc == 1)
@@ -65,7 +63,6 @@ int main(int argc,char **argv)
 		cmd = _strdup(buffer);
 		strtok(cmd, "\n");
 		args = generate_arguments(cmd);
-		args[0] = _which(args[0]);
 		if (args[0])
 		{
 			_execve(args);
@@ -77,4 +74,3 @@ int main(int argc,char **argv)
 	}
 	return (0);
 }
-
