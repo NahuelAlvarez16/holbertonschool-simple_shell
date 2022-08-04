@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 		}
 		cmd = _strdup(buffer);
 		strtok(cmd, "\n");
-		args = generate_arguments(cmd, "\t ");
+		args = generate_arguments(cmd, "\t \n");
 		free(cmd);
 		if (args[0])
 		{
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 				args[0] = cmd;
 				status = _execve(args);
 			}
-			else if (args[0] != NULL)
+			else
 			{
 				status = 127;
 				perror(args[0]);
