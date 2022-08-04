@@ -36,6 +36,7 @@ void _perror(char *name,char *cmd)
 {
 	char *msg = NULL;
 	int length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 17);
+	
 	msg = malloc(length);
 	_strcat(msg, name);
 	_strcat(msg, ": ");
@@ -94,10 +95,9 @@ int main(int argc, char **argv)
 			else
 			{
 				status = 127;
-				perror(args[0]);
+				_perror(argv[0], args[0]);
 			}
 		}
-		_perror(argv[0], args[0]);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
