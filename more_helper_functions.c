@@ -69,16 +69,18 @@ char *_getenv(char *env)
 }
 char *_which(char *cmd)
 {
-	char *paths;
-	char *path;
-	char *cmd_path;
+	char *paths = NULL;
+	char *path = NULL;
+	char *cmd_path = NULL;
 
 	paths = _getenv("PATH");
-	path = strtok(paths, ":");
+	if (paths)
+		path = strtok(paths, ":");
 
 	if (stat(cmd, &st) == 0)
 	{
-		free(path);
+		if (path)
+			free(path);
 		return (_strdup(cmd));
 	}
 	while (path)
@@ -98,7 +100,8 @@ char *_which(char *cmd)
 		path = strtok(NULL, ":");
 		free(cmd_path);
 	}
-	free(paths);
+	if (paths)
+		free(paths);
 	return (NULL);
 }
 int _execve(char **args)

@@ -66,11 +66,18 @@ int main(int argc, char **argv)
 		if (args[0])
 		{
 			cmd = _which(args[0]);
+			if (cmd)
+			{
 			free(args[0]);
 			args[0] = cmd;
 			if (args[0])
 			{
 				_execve(args);
+			}
+			}
+			else
+			{
+				perror(args[0]);
 			}
 		}
 		for (i = 0; args[i]; i++)
