@@ -58,9 +58,7 @@ int main(int argc, char **argv)
 		{
 			if (buffer)
 				free(buffer);
-			if (status != 0)
-				exit(status);
-			return (0);
+			exit(status);
 		}
 		cmd = _strdup(buffer);
 		strtok(cmd, "\n");
@@ -73,7 +71,7 @@ int main(int argc, char **argv)
 			{
 				free(args[0]);
 				args[0] = cmd;
-				_execve(args);
+				status = _execve(args);
 			}
 			else if (args[0] != NULL)
 			{

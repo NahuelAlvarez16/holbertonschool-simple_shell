@@ -114,5 +114,5 @@ int _execve(char **args)
 	}
 	else
 		wait(&status);
-	return (0);
+	return (WEXITSTATUS(status));
 }
