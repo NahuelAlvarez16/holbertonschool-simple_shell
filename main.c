@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 	char *cmd;
 	char **args;
 	int i;
+	int status = 0;
 
 	if (argc > 1)
 	{
@@ -57,6 +58,8 @@ int main(int argc, char **argv)
 		{
 			if (buffer)
 				free(buffer);
+			if (status != 0)
+				exit(status);
 			return (0);
 		}
 		cmd = _strdup(buffer);
@@ -68,15 +71,13 @@ int main(int argc, char **argv)
 			cmd = _which(args[0]);
 			if (cmd)
 			{
-			free(args[0]);
-			args[0] = cmd;
-			if (args[0])
-			{
+				free(args[0]);
+				args[0] = cmd;
 				_execve(args);
 			}
-			}
-			else
+			else if (args[0] != NULL)
 			{
+				status = 127;
 				perror(args[0]);
 			}
 		}
