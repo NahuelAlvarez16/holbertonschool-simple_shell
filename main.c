@@ -42,7 +42,6 @@ int main(int argc, char **argv)
 	char **args;
 	int i;
 	int status = 0;
-	char **env_tmp;
 
 	if (argc > 1)
 	{
@@ -67,10 +66,9 @@ int main(int argc, char **argv)
 		free(cmd);
 		if (_strcmp(args[0], "env") == 0)
 		{
-			env_tmp = environ;
-			while (*env_tmp) {
-				printf("%s\n", *env_tmp);
-	   			*env_tmp++;
+			for (i = 0; environ && environ[i]; i++) {
+				_puts(environ[i]);
+				_putchar('\n');
 			}
 		}
 		else if (args[0])
