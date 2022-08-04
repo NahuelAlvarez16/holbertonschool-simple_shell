@@ -42,6 +42,7 @@ int main(int argc, char **argv)
 	char **args;
 	int i;
 	int status = 0;
+	char **env_tmp;
 
 	if (argc > 1)
 	{
@@ -64,7 +65,15 @@ int main(int argc, char **argv)
 		strtok(cmd, "\n");
 		args = generate_arguments(cmd, "\t \n");
 		free(cmd);
-		if (args[0])
+		if (_strcmp(args[0], "env") == 0)
+		{
+			env_tmp = environ;
+			while (*env_tmp) {
+				printf("%s\n", *env_tmp);
+	   			*env_tmp++;
+			}
+		}
+		else if (args[0])
 		{
 			cmd = _which(args[0]);
 			if (cmd)
