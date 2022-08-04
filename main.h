@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <stdio.h>
 struct stat st;
+extern char **environ;
 int _putchar(char c);
 void _puts(char *str);
 int _strlen(char *s);

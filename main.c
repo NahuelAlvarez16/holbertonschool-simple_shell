@@ -1,59 +1,58 @@
 #include "main.h"
-char **generate_arguments(char *s)
+char **generate_arguments(char *s, char *delimeters)
 {
 	char **args;
 	int i = 0;
-	int x = -1;
-	int index = 0;
 	int length = 0;
+	char *s_tmp;
+	char *token;
 
-	for (i = 0; s && s[i]; i++)
+	s_tmp = _strdup(s);
+	token = strtok(s_tmp, delimeters);
+	for (length = 0; token; length++)
 	{
-		if (s[i] != ' ' && (!s[i + 1] || s[i + 1] == ' '))
-		{
-			length++;
-		}
+		token = strtok(NULL, delimeters);
 	}
+	free(s_tmp);
 	args = malloc(sizeof(char *) * (length + 1));
-	for (i = 0; s && s[i]; i++)
+	if (args == NULL)
 	{
-		if (s[i] != ' ')
-		{
-			if (x == -1)
-			{
-				for (length = 0, x = i; s[x] && s[x] != ' '; x++, length++)
-					;
-				x = 0;
-				args[index] = malloc(sizeof(char *) * length + 1);
-			}
-			args[index][x] = s[i];
-			x++;
-			if ((!s[i + 1] || s[i + 1] == ' '))
-			{
-				args[index][x] = '\0';
-				x = -1;
-				index++;
-			}
-		}
+		return (NULL);
 	}
-	args[index] = NULL;
+
+	s_tmp = _strdup(s);
+	token = strtok(s_tmp, delimeters);
+	for (i = 0; token; i++)
+	{
+
+		args[i] = _strdup(token); 
+		token = strtok(NULL, delimeters);	
+	}
+	args[i] = NULL;
+	free(s_tmp);
 	return (args);
 }
 
-int main(int argc,char **argv)
+int main(int argc, char **argv)
 {
 	char *buffer = NULL;
+	int fd = 0;
 	size_t len = 0;
 	char *cmd;
 	char **args;
 	int i;
+
 	if (argc > 1)
 	{
+		argv[1] = _which(argv[1]);
 		_execve(&argv[1]);
+		free(argv[1]);
 		return (0);
 	}
 	while (argc == 1)
 	{
+		if (isatty(fd) == 1)
+			_puts("$ ");
 		if (getline(&buffer, &len, stdin) == -1 || _strcmp(buffer, "exit\n") == 0)
 		{
 			if (buffer)
@@ -62,12 +61,15 @@ int main(int argc,char **argv)
 		}
 		cmd = _strdup(buffer);
 		strtok(cmd, "\n");
-		args = generate_arguments(cmd);
+		args = generate_arguments(cmd, "\t ");
+		free(cmd);
+		cmd = _which(args[0]);
+		free(args[0]);
+		args[0] = cmd;
 		if (args[0])
 		{
 			_execve(args);
 		}
-		free(cmd);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);

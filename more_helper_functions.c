@@ -31,7 +31,7 @@ char *_strdup(char *str)
 		;
 
 	temp = malloc(size + 1);
-	
+
 	if (temp == NULL)
 		return (NULL);
 	while (i < size)
@@ -49,11 +49,10 @@ char *_strdup(char *str)
  */
 char *_getenv(char *env)
 {
-	extern char **environ;
 	char *aux;
 	char *content;
 	int i = 0;
-	
+
 	for (; environ[i]; i++)
 	{
 		aux = _strdup(environ[i]);
@@ -73,6 +72,7 @@ char *_which(char *cmd)
 	char *paths;
 	char *path;
 	char *cmd_path;
+
 	paths = _getenv("PATH");
 	path = strtok(paths, ":");
 
@@ -88,28 +88,25 @@ char *_which(char *cmd)
 			return (NULL);
 		cmd_path[0] = '\0';
 		_strcat(cmd_path, path);
-                _strcat(cmd_path, "/");
+		_strcat(cmd_path, "/");
 		_strcat(cmd_path, cmd);
-		if(stat(cmd_path, &st) ==  0)
-                {
-			free(paths);	
+		if (stat(cmd_path, &st) ==  0)
+		{
+			free(paths);
 			return (cmd_path);
 		}
-                path = strtok(NULL, ":");
-                free(cmd_path);
-        }
+		path = strtok(NULL, ":");
+		free(cmd_path);
+	}
 	free(paths);
 	return (NULL);
 }
 int _execve(char **args)
 {
 	int status = 0;
-	char *path;
+
 	if (fork() == 0)
 	{
-		path = _which(args[0]);
-		free(args[0]);
-		args[0] = path;
 		execve(args[0], args, NULL);
 	}
 	else
