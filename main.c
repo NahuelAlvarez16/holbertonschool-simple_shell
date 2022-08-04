@@ -63,12 +63,15 @@ int main(int argc, char **argv)
 		strtok(cmd, "\n");
 		args = generate_arguments(cmd, "\t ");
 		free(cmd);
-		cmd = _which(args[0]);
-		free(args[0]);
-		args[0] = cmd;
 		if (args[0])
 		{
-			_execve(args);
+			cmd = _which(args[0]);
+			free(args[0]);
+			args[0] = cmd;
+			if (args[0])
+			{
+				_execve(args);
+			}
 		}
 		for (i = 0; args[i]; i++)
 			free(args[i]);
