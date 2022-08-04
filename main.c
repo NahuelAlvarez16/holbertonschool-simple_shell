@@ -39,7 +39,7 @@ void _perror(char *name,char *cmd)
 	msg = malloc(length);
 	_strcat(msg, name);
 	_strcat(msg, ": ");
-	_strcat(msg, src);
+	_strcat(msg, cmd);
 	_strcat(msg, ": not found\n");
 	write(2, msg, length);
 	free(msg);
