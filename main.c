@@ -32,7 +32,18 @@ char **generate_arguments(char *s, char *delimeters)
 	free(s_tmp);
 	return (args);
 }
-
+void _perror(char *name,char *cmd)
+{
+	char *msg = NULL;
+	int length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 17);
+	msg = malloc(length);
+	_strcat(msg, name);
+	_strcat(msg, ": ");
+	_strcat(msg, src);
+	_strcat(msg, ": not found\n");
+	write(2, msg, length);
+	free(msg);
+}
 int main(int argc, char **argv)
 {
 	char *buffer = NULL;
@@ -86,6 +97,7 @@ int main(int argc, char **argv)
 				perror(args[0]);
 			}
 		}
+		_perror(argv[0], args[0]);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);

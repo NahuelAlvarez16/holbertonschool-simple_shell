@@ -110,7 +110,7 @@ int _execve(char **args)
 
 	if (fork() == 0)
 	{
-		execve(args[0], args, NULL);
+		execve(args[0], args, environ);
 	}
 	else
 		wait(&status);
