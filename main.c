@@ -35,11 +35,15 @@ char **generate_arguments(char *s, char *delimeters)
 void _perror(char *name,char *cmd)
 {
 	char *msg = NULL;
-	int length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 17);
-	
+	int length = 0;
+
+	length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 18);
 	msg = malloc(length);
+	if (!msg)
+		return (msg);
+	msg[0] = '\0';
 	_strcat(msg, name);
-	_strcat(msg, ": ");
+	_strcat(msg, ": 1: ");
 	_strcat(msg, cmd);
 	_strcat(msg, ": not found\n");
 	write(2, msg, length);
