@@ -45,14 +45,13 @@ void _perror(char *name,char *cmd)
 	_strcat(msg, name);
 	_strcat(msg, ": 1: ");
 	_strcat(msg, cmd);
-	_strcat(msg, ": not found\n");
+	_strcat(msg, ": not found");
 	write(2, msg, length);
 	free(msg);
 }
 int main(int argc, char **argv)
 {
 	char *buffer = NULL;
-	int fd = 0;
 	size_t len = 0;
 	char *cmd;
 	char **args;
@@ -68,7 +67,7 @@ int main(int argc, char **argv)
 	}
 	while (argc == 1)
 	{
-		if (isatty(fd) == 1)
+		if (isatty(0) == 1)
 			_puts("$ ");
 		if (getline(&buffer, &len, stdin) == -1 || _strcmp(buffer, "exit\n") == 0)
 		{
