@@ -45,8 +45,8 @@ void _perror(char *name,char *cmd)
 	_strcat(msg, name);
 	_strcat(msg, ": 1: ");
 	_strcat(msg, cmd);
-	_strcat(msg, ": not found");
-	write(2, msg, length);
+	_strcat(msg, ": not found\n");
+	write(2, msg, length - 1);
 	free(msg);
 }
 int main(int argc, char **argv)
