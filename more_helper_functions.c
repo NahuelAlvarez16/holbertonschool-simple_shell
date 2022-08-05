@@ -14,7 +14,7 @@ void _puts(char *str)
 	}
 }
 /**
- * _strdup -pointer to a newly allocated space in memory
+ * _strdup - pointer to a newly allocated space in memory
  * @str: string
  * Return: return array
  */
@@ -67,6 +67,12 @@ char *_getenv(char *env)
 	}
 	return (NULL);
 }
+/**
+* _which - checks and finds the path of the command passed to it
+* @cmd: command
+* Return: the absolute path of the comand
+*/
+
 char *_which(char *cmd)
 {
 	char *paths = NULL;
@@ -104,6 +110,12 @@ char *_which(char *cmd)
 		free(paths);
 	return (NULL);
 }
+/**
+* _execve - Is used to execute the program referenced by the path.
+* @args: pointer to pointer argument string
+* Return: return exit status of program
+*/
+
 int _execve(char **args)
 {
 	int status = 0;

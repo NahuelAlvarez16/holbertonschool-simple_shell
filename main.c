@@ -1,71 +1,18 @@
 #include "main.h"
-char **generate_arguments(char *s, char *delimeters)
+/**
+* main - program shell
+* @argc: number of given arguments
+* @argv: array of arguments
+* Return:  return exit status of last program.
+*/
+int main(int __attribute__((unused)) argc, char **argv)
 {
-	char **args;
-	int i = 0;
-	int length = 0;
-	char *s_tmp;
-	char *token;
-
-	s_tmp = _strdup(s);
-	token = strtok(s_tmp, delimeters);
-	for (length = 0; token; length++)
-	{
-		token = strtok(NULL, delimeters);
-	}
-	free(s_tmp);
-	args = malloc(sizeof(char *) * (length + 1));
-	if (args == NULL)
-	{
-		return (NULL);
-	}
-
-	s_tmp = _strdup(s);
-	token = strtok(s_tmp, delimeters);
-	for (i = 0; token; i++)
-	{
-
-		args[i] = _strdup(token); 
-		token = strtok(NULL, delimeters);	
-	}
-	args[i] = NULL;
-	free(s_tmp);
-	return (args);
-}
-void _perror(char *name,char *cmd)
-{
-	char *msg = NULL;
-	int length = 0;
-
-	length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 18);
-	msg = malloc(length);
-	if (!msg)
-		exit (0);
-	msg[0] = '\0';
-	_strcat(msg, name);
-	_strcat(msg, ": 1: ");
-	_strcat(msg, cmd);
-	_strcat(msg, ": not found\n");
-	write(2, msg, length - 1);
-	free(msg);
-}
-int main(int argc, char **argv)
-{
-	char *buffer = NULL;
+	char *buffer = NULL, *cmd;
 	size_t len = 0;
-	char *cmd;
 	char **args;
-	int i;
 	int status = 0;
 
-	if (argc > 1)
-	{
-		argv[1] = _which(argv[1]);
-		_execve(&argv[1]);
-		free(argv[1]);
-		return (0);
-	}
-	while (argc == 1)
+	while (1)
 	{
 		if (isatty(0) == 1)
 			_puts("$ ");
@@ -80,12 +27,7 @@ int main(int argc, char **argv)
 		args = generate_arguments(cmd, "\t \n");
 		free(cmd);
 		if (_strcmp(args[0], "env") == 0)
-		{
-			for (i = 0; environ && environ[i]; i++) {
-				_puts(environ[i]);
-				_putchar('\n');
-			}
-		}
+			_print_env();
 		else if (args[0])
 		{
 			cmd = _which(args[0]);
@@ -101,9 +43,7 @@ int main(int argc, char **argv)
 				_perror(argv[0], args[0]);
 			}
 		}
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
+		free_array(args);
 	}
 	return (0);
 }
