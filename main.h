@@ -18,5 +18,5 @@ char *_getenv(char *env);
 char *_strdup(char *str);
 char *_which(char *cmd);
 int _execve(char **args);
-int str_starts_with(char *s1, char *s2);
+char *_strchr(char *s, char c);
 #endif

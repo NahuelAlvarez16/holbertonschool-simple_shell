@@ -57,7 +57,7 @@ char *_getenv(char *env)
 	{
 		aux = _strdup(environ[i]);
 		aux = strtok(aux, "=");
-		if (str_starts_with(aux, env))
+		if (_strcmp(aux, env) == 0)
 		{
 			content = _strdup(strtok(NULL, "="));
 			free(aux);
@@ -77,7 +77,7 @@ char *_which(char *cmd)
 	if (paths)
 		path = strtok(paths, ":");
 
-	if (stat(cmd, &st) == 0)
+	if (_strchr(cmd, '/') && stat(cmd, &st) == 0)
 	{
 		if (path)
 			free(path);
