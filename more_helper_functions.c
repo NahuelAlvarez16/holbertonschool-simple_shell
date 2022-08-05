@@ -57,7 +57,7 @@ char *_getenv(char *env)
 	{
 		aux = _strdup(environ[i]);
 		aux = strtok(aux, "=");
-		if (_strcmp(aux, env) == 0)
+		if (str_starts_with(aux, env))
 		{
 			content = _strdup(strtok(NULL, "="));
 			free(aux);
