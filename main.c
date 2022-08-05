@@ -40,7 +40,7 @@ void _perror(char *name,char *cmd)
 	length = sizeof(char) * (_strlen(name) + _strlen(cmd) + 18);
 	msg = malloc(length);
 	if (!msg)
-		return (msg);
+		exit (0);
 	msg[0] = '\0';
 	_strcat(msg, name);
 	_strcat(msg, ": 1: ");
