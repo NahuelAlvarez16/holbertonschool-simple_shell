@@ -22,4 +22,5 @@ char *_strchr(char *s, char c);
 char **generate_arguments(char *s, char *delimeters);
 void _print_env(void);
 void free_array(char **array);
+void _perror(char *name, char *cmd);
 #endif
